@@ -99,7 +99,7 @@ colors = scales::col_numeric(
   5. Create a table using `gt` with data from your project or from the `garden_harvest` data if your project data aren't ready.
 ```{r}
 g2 <- garden_harvest %>%
-  filter(vegetable %in% c("lettuce", "spinach")) %>%
+  filter(vegetable %in% c("lettuce", "spinach", "peas")) %>%
   group_by(vegetable, date) %>%
   summarize(daily_harvest_lb = sum(weight)*0.00220462) %>%
   mutate(cum_harvest_lb = cumsum(daily_harvest_lb)) %>%
@@ -107,8 +107,8 @@ g2 <- garden_harvest %>%
     groupname_col = "date"
   ) %>%
   tab_header(
-    title = "Daily harvest of Lettuce and Spinach",
-    subtitle = md("Cumulative Weights of Spinach and Lettuce")
+    title = "Daily harvest of Lettuce, peas, and spinach",
+    subtitle = md("Cumulative weights harvested of leafy greens")
   ) %>%
   cols_label(
     vegetable = "Vegetable",
@@ -119,6 +119,8 @@ g2 <- garden_harvest %>%
              colors =  scales::col_numeric(palette = "magma",
                                            domain = NULL)) %>%
   tab_options(column_labels.background.color = "navy")
+
+g2
 ```
   
   6. Use `patchwork` operators and functions to combine at least two graphs using your project data or `garden_harvest` data if your project data aren't read.
@@ -148,6 +150,8 @@ graph2 <- garden_harvest %>%
   ggplot(aes(x = date, y = cumWeight, color = variety)) +
   geom_line() +
   labs(title = "The Cumulative Weight (lb) of Gourmet Golden & Sweet Merlin beets", x = "", y = "")
+
+graph1|graph2
 ```
   
 
